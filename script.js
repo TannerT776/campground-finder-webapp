@@ -15,22 +15,34 @@ searchBtn.addEventListener("click", fetchCampgrounds);
 async function fetchCampgrounds() {
   loading.classList.remove("hidden");
   errorBox.classList.add("hidden");
-  results.innerHTML = "";
 
   try {
-    const query = searchInput.value;
-
-    // Replace this URL with your real API
-    const res = await fetch(`https://api.example.com/campgrounds?q=${query}`);
-    
-    if (!res.ok) throw new Error("Failed to fetch data");
-
-    campgrounds = await res.json();
+    // TEMP MOCK DATA (for testing)
+    campgrounds = [
+      {
+        id: "1",
+        name: "Pine Valley Campground",
+        location: "Utah",
+        type: "tent"
+      },
+      {
+        id: "2",
+        name: "Lakeview RV Park",
+        location: "Utah",
+        type: "rv"
+      },
+      {
+        id: "3",
+        name: "Mountain Creek Camp",
+        location: "Utah",
+        type: "free"
+      }
+    ];
 
     applyFilter();
 
   } catch (err) {
-    errorBox.textContent = "Could not load campgrounds. Try again.";
+    errorBox.textContent = "Something went wrong.";
     errorBox.classList.remove("hidden");
   } finally {
     loading.classList.add("hidden");
