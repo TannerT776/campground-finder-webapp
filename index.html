@@ -1,35 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campground Finder</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Campground Finder</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-    <header>
-        <h1>Campground Finder</h1>
-        <p>Find campgrounds and save your favorites.</p>
-    </header>
+  <header>
+    <h1>Campground Finder</h1>
+  </header>
 
-    <main>
-        <section class="search-section">
-            <input type="text" id="searchInput" placeholder="Search for a campground">
-            <button id="searchButton">Search</button>
-        </section>
+  <main>
 
-        <section>
-            <h2>Campground Results</h2>
-            <div id="campgroundList"></div>
-        </section>
+    <section class="search-section">
+      <input type="text" id="searchInput" placeholder="Search campgrounds..." />
+      
+      <select id="filterSelect">
+        <option value="all">All</option>
+        <option value="free">Free</option>
+        <option value="paid">Paid</option>
+        <option value="tent">Tent</option>
+        <option value="rv">RV</option>
+      </select>
 
-        <section>
-            <h2>Favorite Campgrounds</h2>
-            <div id="favoritesList"></div>
-        </section>
-    </main>
+      <button id="searchBtn">Search</button>
+    </section>
 
-    <script src="script.js"></script>
+    <div id="loading" class="hidden">Loading campgrounds...</div>
+    <div id="error" class="hidden"></div>
+
+    <section id="results"></section>
+
+    <section>
+      <h2>Saved Campgrounds</h2>
+      <div id="favorites"></div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
