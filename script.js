@@ -1,97 +1,101 @@
-const campgrounds = [
-    {
-        name: "Yellowstone Campground",
-        location: "Wyoming",
-        description: "Beautiful campground near Yellowstone National Park."
-    },
-    {
-        name: "Bear Lake Campground",
-        location: "Utah",
-        description: "Great fishing and lake access."
-    },
-    {
-        name: "Mountain View Campground",
-        location: "Idaho",
-        description: "Amazing mountain scenery and hiking trails."
-    }
-];
-
-const campgroundList = document.getElementById("campgroundList");
-const favoritesList = document.getElementById("favoritesList");
-const searchButton = document.getElementById("searchButton");
+const searchBtn = document.getElementById("searchBtn");
 const searchInput = document.getElementById("searchInput");
+const filterSelect = document.getElementById("filterSelect");
 
-function displayCampgrounds(list) {
-    campgroundList.innerHTML = "";
+const results = document.getElementById("results");
+const loading = document.getElementById("loading");
+const errorBox = document.getElementById("error");
+const favoritesBox = document.getElementById("favorites");
 
-    list.forEach(campground => {
-        const card = document.createElement("div");
-        card.classList.add("campground-card");
+let campgrounds = [];
+let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
-        card.innerHTML = `
-            <h3>${campground.name}</h3>
-            <p><strong>Location:</strong> ${campground.location}</p>
-            <p>${campground.description}</p>
-            <button class="favorite-btn">Add to Favorites</button>
-        `;
+searchBtn.addEventListener("click", fetchCampgrounds);
 
-        const button = card.querySelector("button");
+async function fetchCampgrounds() {
+  loading.classList.remove("hidden");
+  errorBox.classList.add("hidden");
+  results.innerHTML = "";
 
-        button.addEventListener("click", () => {
-            saveFavorite(campground);
-        });
+  try {
+    const query = searchInput.value;
 
-        campgroundList.appendChild(card);
-    });
+    // Replace this URL with your real API
+    const res = await fetch(`https://api.example.com/campgrounds?q=${query}`);
+    
+    if (!res.ok) throw new Error("Failed to fetch data");
+
+    campgrounds = await res.json();
+
+    applyFilter();
+
+  } catch (err) {
+    errorBox.textContent = "Could not load campgrounds. Try again.";
+    errorBox.classList.remove("hidden");
+  } finally {
+    loading.classList.add("hidden");
+  }
 }
 
-function saveFavorite(campground) {
-    let favorites =
-        JSON.parse(localStorage.getItem("favorites")) || [];
+function applyFilter() {
+  const filter = filterSelect.value;
 
-    favorites.push(campground);
+  let filtered = campgrounds;
 
-    localStorage.setItem(
-        "favorites",
-        JSON.stringify(favorites)
-    );
+  if (filter !== "all") {
+    filtered = campgrounds.filter(c => c.type === filter || c.category === filter);
+  }
 
-    loadFavorites();
+  renderCampgrounds(filtered);
 }
 
-function loadFavorites() {
-    favoritesList.innerHTML = "";
+function renderCampgrounds(list) {
+  results.innerHTML = "";
 
-    let favorites =
-        JSON.parse(localStorage.getItem("favorites")) || [];
+  if (list.length === 0) {
+    results.innerHTML = "<p>No campgrounds found.</p>";
+    return;
+  }
 
-    favorites.forEach(campground => {
-        const item = document.createElement("div");
+  list.forEach(camp => {
+    const card = document.createElement("div");
+    card.className = "card";
 
-        item.classList.add("campground-card");
+    card.innerHTML = `
+      <h3>${camp.name}</h3>
+      <p>${camp.location}</p>
+      <p>Type: ${camp.type}</p>
+      <button onclick="saveFavorite('${camp.id}')">Save</button>
+    `;
 
-        item.innerHTML = `
-            <h3>${campground.name}</h3>
-            <p>${campground.location}</p>
-        `;
-
-        favoritesList.appendChild(item);
-    });
+    results.appendChild(card);
+  });
 }
 
-searchButton.addEventListener("click", () => {
-    const searchTerm =
-        searchInput.value.toLowerCase();
+function saveFavorite(id) {
+  const exists = favorites.includes(id);
 
-    const filtered =
-        campgrounds.filter(campground =>
-            campground.name
-                .toLowerCase()
-                .includes(searchTerm)
-        );
+  if (!exists) {
+    favorites.push(id);
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    renderFavorites();
+  }
+}
 
-    displayCampgrounds(filtered);
-});
+function renderFavorites() {
+  favoritesBox.innerHTML = "";
 
-displayCampgrounds(campgrounds);
-loadFavorites();
+  favorites.forEach(id => {
+    const camp = campgrounds.find(c => c.id === id);
+    if (!camp) return;
+
+    const div = document.createElement("div");
+    div.className = "card small";
+    div.textContent = camp.name;
+
+    favoritesBox.appendChild(div);
+  });
+}
+
+// initial load
+renderFavorites();
