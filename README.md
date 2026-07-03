@@ -7,7 +7,7 @@ This project is a web application that allows users to search for campground inf
 The purpose of this project is to learn JavaScript web development, API integration, and DOM manipulation.
 
 ## Demo Video
-[YouTube Video Link Here]
+[https://youtu.be/xYzP0YW_vVQ]
 
 ## Development Environment
 - Visual Studio Code
