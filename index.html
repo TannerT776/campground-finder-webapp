@@ -14,19 +14,33 @@
 
   <main>
 
-    <section class="search-section">
-      <input type="text" id="searchInput" placeholder="Search campgrounds..." />
-      
-      <select id="filterSelect">
-        <option value="all">All</option>
-        <option value="free">Free</option>
-        <option value="paid">Paid</option>
-        <option value="tent">Tent</option>
-        <option value="rv">RV</option>
-      </select>
+    <form id="searchForm" class="search-section">
 
-      <button id="searchBtn">Search</button>
-    </section>
+  <label for="searchInput">
+    Search Campgrounds
+  </label>
+
+  <input 
+    type="text" 
+    id="searchInput" 
+    placeholder="Search campgrounds..."
+    minlength="2"
+    required
+  />
+
+  <select id="filterSelect">
+    <option value="all">All</option>
+    <option value="free">Free</option>
+    <option value="paid">Paid</option>
+    <option value="tent">Tent</option>
+    <option value="rv">RV</option>
+  </select>
+
+  <button type="submit">
+    Search
+  </button>
+
+</form>
 
     <div id="loading" class="hidden">Loading campgrounds...</div>
     <div id="error" class="hidden"></div>
