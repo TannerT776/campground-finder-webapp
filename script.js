@@ -1,3 +1,5 @@
+import { db } from "./firebase.js";
+import { collection, getDocs } from "firebase/firestore";
 const searchBtn = document.getElementById("searchBtn");
 const searchInput = document.getElementById("searchInput");
 const filterSelect = document.getElementById("filterSelect");
