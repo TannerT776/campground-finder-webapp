@@ -17,29 +17,18 @@ async function fetchCampgrounds() {
   errorBox.classList.add("hidden");
 
   try {
-    // TEMP MOCK DATA (for testing)
-    campgrounds = [
-      {
-        id: "1",
-        name: "Pine Valley Campground",
-        location: "Utah",
-        type: "tent"
-      },
-      {
-        id: "2",
-        name: "Lakeview RV Park",
-        location: "Utah",
-        type: "rv"
-      },
-      {
-        id: "3",
-        name: "Mountain Creek Camp",
-        location: "Utah",
-        type: "free"
-      }
-    ];
+   const querySnapshot = await getDocs(collection(db, "campgrounds"));
 
-    applyFilter();
+campgrounds = [];
+
+querySnapshot.forEach((doc) => {
+  campgrounds.push({
+    id: doc.id,
+    ...doc.data()
+  });
+});
+
+applyFilter();
 
   } catch (err) {
     errorBox.textContent = "Something went wrong.";
