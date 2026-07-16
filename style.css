@@ -72,3 +72,21 @@ button:hover {
     transform: translateY(0);
   }
 }
+
+a {
+  display: inline-block;
+  margin: 10px 0;
+  color: #2d6a4f;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .search-section {
+    flex-direction: column;
+  }
+}
