@@ -45,11 +45,23 @@ applyFilter();
 
 function applyFilter() {
   const filter = filterSelect.value;
+  const searchText = searchInput.value.toLowerCase();
 
   let filtered = campgrounds;
 
+  // Filter by dropdown
   if (filter !== "all") {
-    filtered = campgrounds.filter(c => c.type === filter || c.category === filter);
+    filtered = filtered.filter(c => 
+      c.type === filter || c.category === filter
+    );
+  }
+
+  // Filter by search box
+  if (searchText !== "") {
+    filtered = filtered.filter(c =>
+      c.name.toLowerCase().includes(searchText) ||
+      c.location.toLowerCase().includes(searchText)
+    );
   }
 
   renderCampgrounds(filtered);
