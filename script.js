@@ -65,11 +65,18 @@ function renderCampgrounds(list) {
     card.className = "card";
 
     card.innerHTML = `
-      <h3>${camp.name}</h3>
-      <p>${camp.location}</p>
-      <p>Type: ${camp.type}</p>
-      <button onclick="saveFavorite('${camp.id}')">Save</button>
-    `;
+  <h3>${camp.name}</h3>
+  <p>${camp.location}</p>
+  <p>Type: ${camp.type}</p>
+
+  <a href="details.html?id=${camp.id}">
+    View Details
+  </a>
+
+  <button onclick="saveFavorite('${camp.id}')">
+    Save
+  </button>
+`;
 
     results.appendChild(card);
   });
