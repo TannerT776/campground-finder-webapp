@@ -1,6 +1,6 @@
 import { db } from "./firebase.js";
 import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-const searchBtn = document.getElementById("searchBtn");
+const searchForm = document.getElementById("searchForm");
 const searchInput = document.getElementById("searchInput");
 const filterSelect = document.getElementById("filterSelect");
 
@@ -12,7 +12,10 @@ const favoritesBox = document.getElementById("favorites");
 let campgrounds = [];
 let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
-searchBtn.addEventListener("click", fetchCampgrounds);
+searchForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  fetchCampgrounds();
+});
 
 async function fetchCampgrounds() {
   loading.classList.remove("hidden");
