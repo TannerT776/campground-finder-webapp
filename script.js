@@ -32,6 +32,8 @@ querySnapshot.forEach((doc) => {
     ...doc.data()
   });
 });
+    
+  console.log(campgrounds);
 
 applyFilter();
 
