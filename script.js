@@ -46,23 +46,24 @@ applyFilter();
 }
 
 function applyFilter() {
-  const filter = filterSelect.value;
+  const filter = filterSelect.value.toLowerCase();
   const searchText = searchInput.value.toLowerCase();
 
   let filtered = campgrounds;
 
   // Filter by dropdown
   if (filter !== "all") {
-    filtered = filtered.filter(c => 
-      c.type === filter || c.category === filter
+    filtered = filtered.filter(c =>
+      c.type?.toLowerCase() === filter ||
+      c.category?.toLowerCase() === filter
     );
   }
 
   // Filter by search box
   if (searchText !== "") {
     filtered = filtered.filter(c =>
-      c.name.toLowerCase().includes(searchText) ||
-      c.location.toLowerCase().includes(searchText)
+      c.name?.toLowerCase().includes(searchText) ||
+      c.location?.toLowerCase().includes(searchText)
     );
   }
 
