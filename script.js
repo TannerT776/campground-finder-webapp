@@ -127,3 +127,4 @@ function renderFavorites() {
 
 // initial load
 renderFavorites();
+fetchCampgrounds();
