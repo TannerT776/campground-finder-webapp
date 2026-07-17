@@ -85,11 +85,9 @@ a:hover {
   text-decoration: underline;
 }
 
-@media (max-width: 600px) {
-  .search-section {
-    flex-direction: column;
-  }
-}
+
+/* Navigation */
+
 nav {
   background: #1b4332;
   color: white;
@@ -97,6 +95,10 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+nav h2 {
+  margin: 0;
 }
 
 nav ul {
@@ -113,7 +115,14 @@ nav a {
   display: none;
 }
 
+
+/* Mobile */
+
 @media (max-width: 600px) {
+
+  .search-section {
+    flex-direction: column;
+  }
 
   #menuButton {
     display: block;
@@ -125,3 +134,4 @@ nav a {
   }
 
 }
+
